@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Neshangar.Windows;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,12 @@ namespace Neshangar
         public MainWindow()
         {
             InitializeComponent();
+            ShowFloatingWidget();
+        }
+        private void ShowFloatingWidget()
+        {
+            FloatingWidget floatingWidget = new FloatingWidget();
+            floatingWidget.Show();
         }
     }
 }
