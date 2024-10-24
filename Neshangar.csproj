@@ -10,6 +10,11 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Page Remove="Themes\DarkTheme.xaml" />
+	  <Page Remove="Themes\LightTheme.xaml" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<COMReference Include="{d37e2a3e-8545-3a39-9f4f-31827c9124ab}">
 			<WrapperTool>tlbimp</WrapperTool>
 			<VersionMinor>4</VersionMinor>
@@ -19,6 +24,15 @@
 		<Import Include="System.Data" />
 		<Import Include="System.Drawing" />
 		<Import Include="System.Windows.Forms" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Neshangar.Core\Neshangar.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Resource Include="Themes\DarkTheme.xaml" />
+	  <Resource Include="Themes\LightTheme.xaml" />
 	</ItemGroup>
 
 </Project>

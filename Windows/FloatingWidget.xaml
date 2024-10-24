@@ -14,11 +14,14 @@
         MouseDown="Window_MouseDown"
         MouseEnter="Window_MouseEnter"
         MouseLeave="Window_MouseLeave"
-        SizeToContent="WidthAndHeight"
         ShowInTaskbar="False"
         d:DesignHeight="44.891" 
-        d:DesignWidth="44.989">
-
+        d:DesignWidth="44.989" 
+        Width="70"
+        Height="43"
+        MouseDoubleClick="Window_MouseDouble"
+        
+        >
     <Window.Resources>
         <!-- Circular Button Style -->
         <Style x:Key="CircularButtonStyle" TargetType="Button">
@@ -47,15 +50,15 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-
+    
     <Grid>
 
-        <Border x:Name="FloatingWidgetBorder" BorderBrush="White" BorderThickness="2" CornerRadius="10" Background="Red" Margin="5,5,5,5">
-            <TextBlock x:Name="FloatingWidgetText" HorizontalAlignment="Center" Visibility="Hidden" VerticalAlignment="Center" Foreground="White" FontFamily="Yu Gothic UI Semibold" FontSize="14" Margin="8,4,8,4">
-             3:00
+        <Border x:Name="FloatingWidgetBorder" BorderBrush="White" BorderThickness="2" Background="Red" CornerRadius="10" Margin="5">
+            <TextBlock x:Name="FloatingWidgetText" HorizontalAlignment="Center" Visibility="Hidden" VerticalAlignment="Center" Foreground="White" FontFamily="Yu Gothic UI Semibold" FontSize="14" Margin="4">
+             
             </TextBlock>
         </Border>
-        <Button x:Name="FloatingWidgetCloseButton"  Visibility="Visible"
+        <Button x:Name="FloatingWidgetCloseButton"  Visibility="Hidden"
                     Background="White" Foreground="Black" FontSize="8" BorderBrush="Transparent" Click="Close"
                     Style="{StaticResource CircularButtonStyle}" HorizontalAlignment="Left" Width="15" Height="15" VerticalAlignment="Top" Cursor="Hand">
             <TextBlock Text="✕" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10" RenderTransformOrigin="0.502,0.547" LineHeight="15" Margin="0,1,0,0" FontWeight="Bold" FontFamily="Segoe UI Black" />
