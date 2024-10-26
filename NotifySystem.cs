@@ -1,9 +1,12 @@
-﻿using Neshangar.Windows;
+﻿using Neshangar.Core.Data;
+using Neshangar.Core.Entities;
+using Neshangar.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Neshangar
@@ -17,13 +20,15 @@ namespace Neshangar
         private UsersList _usersList;
         private readonly Settings _settings;
         private readonly ChangeStatus _changeStatus;
+        private readonly Client _client;
 
-        public NotifySystem(FloatingWidget floatingWidget,UsersList usersList,Settings settings,ChangeStatus changeStatus)
+        public NotifySystem(FloatingWidget floatingWidget, UsersList usersList, Settings settings, ChangeStatus changeStatus, Client client)
         {
             _floatingWidget = floatingWidget;
             _usersList = usersList;
             _settings = settings;
             _changeStatus = changeStatus;
+            _client = client;
             InitNotifyIcon();
             InitContextMenu();
         }
@@ -36,6 +41,47 @@ namespace Neshangar
             toggleFloatingWidget = new ToolStripMenuItem("Hide Widget");
             toggleFloatingWidget.Click += ToggleFloatingWidget;
             _contextMenuStrip.Items.Add(toggleFloatingWidget);
+
+            // Divider
+            _contextMenuStrip.Items.Add(new ToolStripSeparator());
+
+            //Set to Busy for 15 minutes
+            var setBusy = new ToolStripMenuItem("Busy for 15 minutes");
+            setBusy.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.Busy, TimeSpan.FromMinutes(15)); };
+            _contextMenuStrip.Items.Add(setBusy);
+
+            //Set to Busy for 30 minutes
+            setBusy = new ToolStripMenuItem("Busy for 30 minutes");
+            setBusy.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.Busy, TimeSpan.FromMinutes(30)); };
+            _contextMenuStrip.Items.Add(setBusy);
+
+            //Set to Busy for 45 minutes
+            setBusy = new ToolStripMenuItem("Busy for 40 minutes");
+            setBusy.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.Busy, TimeSpan.FromMinutes(45)); };
+            _contextMenuStrip.Items.Add(setBusy);
+
+            //Set to Busy for 60 minutes
+            setBusy = new ToolStripMenuItem("Busy for 60 minutes");
+            setBusy.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.Busy, TimeSpan.FromMinutes(60)); };
+            _contextMenuStrip.Items.Add(setBusy);
+
+            // Divider
+            _contextMenuStrip.Items.Add(new ToolStripSeparator());
+
+            //Set to online
+            var setOnline = new ToolStripMenuItem("Online");
+            setOnline.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.Online, null); };
+            _contextMenuStrip.Items.Add(setOnline);
+
+            //Set to idle
+            var setIdle = new ToolStripMenuItem("Idle");
+            setIdle.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.Idle, null); };
+            _contextMenuStrip.Items.Add(setIdle);
+
+            //Set to afk
+            var setAfk = new ToolStripMenuItem("AFK");
+            setAfk.Click += async (object? sender, EventArgs e) => { await _client.SetStatusViaTimer(StatusEnum.AFK, null); };
+            _contextMenuStrip.Items.Add(setAfk);
 
             // Divider
             _contextMenuStrip.Items.Add(new ToolStripSeparator());
@@ -131,6 +177,18 @@ namespace Neshangar
             _notifyIcon.Icon = new Icon("red-circle.ico");
             _notifyIcon.Visible = true;
             _notifyIcon.Text = "Neshangar";
+            _notifyIcon.Click += (object? sender, EventArgs e) =>
+            {
+                _floatingWidget.Show();
+                _floatingWidget.Activate();
+                _floatingWidget.Focus();
+            };
+            _notifyIcon.DoubleClick += (object? sender, EventArgs e) =>
+            {
+                _changeStatus.Show();
+                _changeStatus.Activate();
+                _changeStatus.Focus();
+            };
         }
     }
 }

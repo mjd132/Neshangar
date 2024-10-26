@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Neshangar.Windows"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="Change Status" Height="160" Width="280"
         ResizeMode="NoResize"
         WindowStyle="SingleBorderWindow"

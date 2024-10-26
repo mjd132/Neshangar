@@ -28,17 +28,21 @@ namespace Neshangar.Windows
 
         private Client _client;
         private UsersList _usersList;
+        private readonly ChangeStatus _changeStatus;
         private DispatcherTimer _countdonwTimer;
-        public FloatingWidget(Client client, UsersList usersList)
+        public FloatingWidget(Client client, UsersList usersList, ChangeStatus changeStatus)
         {
             _client = client;
             _usersList = usersList;
+            _changeStatus = changeStatus;
             _client.UserChanged += OnUserChangedReceived;
-            AdjustWindowSize();
+           
             InitializeComponent();
             SetFloatingWidgetOnTop();
             this.Deactivated += (object? sender, EventArgs e) => SetFloatingWidgetOnTop();
             this.Loaded += FloatingWidget_Loaded;
+            this.Loaded += AdjustWindowSize;
+            this.MouseRightButtonDown += OnMouseRightButtonDown;
             //this.LocationChanged += FloatingWidget_LocationChanged;
             AdjustComponent();
 
@@ -47,6 +51,19 @@ namespace Neshangar.Windows
             _countdonwTimer.Tick += (object? sender,EventArgs e)=> UpdateFloatingWidget();
 
         }
+
+        private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (_changeStatus.IsVisible)
+            {
+                _changeStatus.Focus();
+            }
+            else
+            {
+                _changeStatus.Show();
+            }
+        }
+
         private void UpdateFloatingWidget()
         {
 
@@ -101,22 +118,22 @@ namespace Neshangar.Windows
             FloatingWidgetBorder.CornerRadius = new CornerRadius(screenWidth / 2);
 
             FloatingWidgetText.Visibility = Visibility.Hidden;
-
+            
             if (_client.user != null)
             {
                 OnUserChangedReceived(_client.user);
             }
         }
 
-        private void AdjustWindowSize()
+        private void AdjustWindowSize(object sender, RoutedEventArgs e)
         {
             double screenHeight = SystemParameters.PrimaryScreenHeight * 0.025;
 
             var workingArea = Screen.PrimaryScreen.WorkingArea;
 
             // Set the position of the floating widget
-            //this.Left = workingArea.Right - this.ActualWidth;
-            //this.Top = workingArea.Bottom - this.ActualHeight;
+            this.Left = workingArea.Right - this.Width;
+            this.Top = workingArea.Bottom - this.Height;
 
             this.ResizeMode = ResizeMode.NoResize;
             this.WindowStyle = WindowStyle.None;

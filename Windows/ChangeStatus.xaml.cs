@@ -44,6 +44,7 @@ namespace Neshangar.Windows
             TimeSpanInput.Text = _client.user?.expireInterval?.TotalMinutes.ToString();
             TimeSpanInput.PreviewTextInput += TextBox_OnPreviewTextInput;
             ChangeButton.Click += ChangeStatusClickEvent;
+            CancelButton.Click += (object sender, RoutedEventArgs e) => Close();
         }
 
         private async void ChangeStatusClickEvent(object sender, RoutedEventArgs e)
