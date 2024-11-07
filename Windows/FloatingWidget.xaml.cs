@@ -48,7 +48,7 @@ namespace Neshangar.Windows
 
             _countdonwTimer = new DispatcherTimer();
             _countdonwTimer.Interval = TimeSpan.FromMinutes(1);
-            _countdonwTimer.Tick += (object? sender,EventArgs e)=> UpdateFloatingWidget();
+            _countdonwTimer.Tick += (object? sender,EventArgs e) => UpdateFloatingWidget();
 
         }
 
@@ -122,6 +122,10 @@ namespace Neshangar.Windows
             if (_client.user != null)
             {
                 OnUserChangedReceived(_client.user);
+            }
+            else
+            {
+                FloatingWidgetText.Text = "Connecting";
             }
         }
 

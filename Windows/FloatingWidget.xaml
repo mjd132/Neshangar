@@ -17,10 +17,10 @@
         ShowInTaskbar="False"
         d:DesignHeight="43" 
         d:DesignWidth="70" 
-        Width="70"
-        Height="43"
+        MinWidth="70"
+        MinHeight="43"
+        SizeToContent="WidthAndHeight"
         MouseDoubleClick="Window_MouseDouble"
-        
         >
     <Window.Resources>
         <!-- Circular Button Style -->

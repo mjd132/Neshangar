@@ -29,7 +29,6 @@ namespace Neshangar.Windows
         {
             _client = client;
             InitializeComponent();
-            AdjustComponent();
         }
 
         private void AdjustComponent()
