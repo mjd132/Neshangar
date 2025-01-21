@@ -1,20 +1,21 @@
-﻿using Neshangar.Windows;
-using System.Windows;
-using Neshangar.Core.Data;
-using Neshangar.Core.Entities;
+﻿using System.Windows;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Diagnostics;
 using Microsoft.Win32;
+using Neshangar.Core.Data;
+using Neshangar.Windows;
+using Application = System.Windows.Application;
 
 namespace Neshangar
 {
-
-    public partial class App : System.Windows.Application
+    public partial class App : Application
     {
         private NotifySystem _notifySystem;
-        private FloatingWidget floatingWidget;
+        private FloatingWidget _floatingWidget;
         private Client _client;
+        private Connect _connect;
         public static IServiceProvider ServiceProvider { get; private set; }
+        public IConfigurationRoot Configuration { get; private set; }
 
         protected override void OnStartup(StartupEventArgs e)
         {
@@ -29,11 +30,9 @@ namespace Neshangar
 
             InitialClient();
 
-            floatingWidget = ServiceProvider.GetRequiredService<FloatingWidget>();
-            floatingWidget.Show();
-
-            _notifySystem = ServiceProvider.GetRequiredService<NotifySystem>();
-           
+            _floatingWidget = ServiceProvider.GetRequiredService<FloatingWidget>();
+            _connect = ServiceProvider.GetRequiredService<Connect>();
+            _connect.Show();
         }
 
         private void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
@@ -43,6 +42,7 @@ namespace Neshangar
                 ApplyTheme();
             }
         }
+
         private void ApplyTheme()
         {
             bool isDarkMode = IsDarkModeEnabled();
@@ -60,9 +60,11 @@ namespace Neshangar
             Resources.MergedDictionaries.Clear();
             Resources.MergedDictionaries.Add(themeDict);
         }
+
         private bool IsDarkModeEnabled()
         {
-            const string registryKey = @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
+            const string registryKey =
+                @"HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Themes\Personalize";
             const string registryValue = "AppsUseLightTheme";
 
             object value = Registry.GetValue(registryKey, registryValue, null);
@@ -74,21 +76,24 @@ namespace Neshangar
             return false;
         }
 
-        private async void InitialClient()
+        private void InitialClient()
         {
+            _client = ServiceProvider.GetRequiredService<Client>();
+            _client.UserLoggedIn += OnLoggedIn;
+        }
 
-            //_client = ServiceProvider.GetRequiredService<Client>();
-            //try
-            //{
-            //    await _client.SetStatusViaTimer(StatusEnum.Online ,null);
-            //}
-            //catch (Exception ex)
-            //{
+        private void OnLoggedIn()
+        {
+            Current.Dispatcher.Invoke(() =>
+            {
+                if (_connect.IsVisible)
+                {
+                    _connect.Hide();
+                }
 
-            //    Trace.WriteLine($"Error initializing SignalR client: {ex.Message}");
-            //}
-
-            
+                _floatingWidget.Show();
+                _notifySystem = ServiceProvider.GetRequiredService<NotifySystem>();
+            });
         }
 
         private void ConfigureService(ServiceCollection services)
@@ -96,35 +101,26 @@ namespace Neshangar
             services.AddSingleton<FloatingWidget>();
             services.AddSingleton<UsersList>();
             services.AddSingleton<Settings>();
+            services.AddSingleton<Connect>();
             services.AddSingleton<ChangeStatus>();
             services.AddSingleton<NotifySystem>();
 
-            services.AddSingleton<DataFileContext>(provider =>
-            {
-                return new DataFileContext("Neshangar.json");
-            });
-
+            services.AddSingleton<DataFileContext>(provider => new DataFileContext("Setting.json"));
             services.AddSingleton<Client>(provider =>
-            {
-                return new Client($"https://localhost:44384/indicator", ServiceProvider.GetRequiredService<DataFileContext>());
-            });
-            
+                new Client(ServiceProvider.GetRequiredService<DataFileContext>()));
         }
 
         public void ToggleFloatingWidget()
         {
-
-            if (floatingWidget.IsVisible)
+            if (_floatingWidget.IsVisible)
             {
-                floatingWidget.Hide();
+                _floatingWidget.Hide();
                 _notifySystem.toggleFloatingWidget.Text = "Show Widget";
-
             }
             else
             {
-                floatingWidget.Show();
+                _floatingWidget.Show();
                 _notifySystem.toggleFloatingWidget.Text = "Hide Widget";
-
             }
         }
 
@@ -134,7 +130,5 @@ namespace Neshangar
 
             base.OnExit(e);
         }
-
     }
-
 }

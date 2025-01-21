@@ -1,23 +1,11 @@
-﻿using Neshangar.Core.Data;
-using Neshangar.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.Xml;
+using Neshangar.Core.Data;
+using Neshangar.Core.Entities;
 
 namespace Neshangar.Windows
 {
@@ -52,14 +40,21 @@ namespace Neshangar.Windows
             _countdonwTimer.Tick += CountdownTimer_Tick;
             _countdonwTimer.Start();
         }
+
         private void CountdownTimer_Tick(object? sender, EventArgs e)
         {
             foreach (var user in _users)
             {
-                if (user.expiredAt != null)
+                if (user.ExpiredAt != null)
                 {
-                    user.remainingTime = user.expiredAt - DateTime.Now;
-                    user.remainingTimeString = user.remainingTime?.ToString(@"hh\:mm\:ss");
+                    var remainingTime = user.ExpiredAt - DateTime.Now;
+                    if (remainingTime < TimeSpan.Zero)
+                    {
+                        continue;
+                    }
+
+                    user.RemainingTime = remainingTime;
+                    user.RemainingTimeString = user.RemainingTime?.ToString(@"hh\:mm\:ss");
                 }
             }
 
@@ -77,8 +72,6 @@ namespace Neshangar.Windows
 
         private void AdjustWindow()
         {
-
-
             Width = SystemParameters.PrimaryScreenWidth * 0.25;
             Height = Screen.PrimaryScreen.WorkingArea.Bottom;
 
@@ -98,7 +91,6 @@ namespace Neshangar.Windows
             {
                 Trace.WriteLine(ex.Message);
             }
-
         }
 
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -127,6 +119,5 @@ namespace Neshangar.Windows
             e.Cancel = true;
             this.Hide();
         }
-
     }
 }

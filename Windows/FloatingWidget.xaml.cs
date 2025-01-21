@@ -67,9 +67,9 @@ namespace Neshangar.Windows
         private void UpdateFloatingWidget()
         {
 
-            if (_client.user?.expiredAt != null)
+            if (_client.user?.ExpiredAt != null)
             {
-                var remainingTime = _client.user?.expiredAt - DateTime.Now + TimeSpan.FromMinutes(1);
+                var remainingTime = _client.user?.ExpiredAt - DateTime.Now + TimeSpan.FromMinutes(1);
                 var remainingTimeString = "~"+remainingTime?.ToString(@"hh\:mm");
                 FloatingWidgetText.Text = remainingTimeString;
             }
@@ -78,7 +78,7 @@ namespace Neshangar.Windows
         {
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
             {
-                switch (user.status)
+                switch (user.Status)
                 {
                     case StatusEnum.Online:
                         FloatingWidgetBorder.Background = new SolidColorBrush(Colors.Green);

@@ -29,35 +29,54 @@ namespace Neshangar.Windows
         {
             _client = client;
             InitializeComponent();
+            
+            this.Activated += OnWindowActivated;
+        }
+        
+        private void OnWindowActivated(object? sender, EventArgs e)
+        {
+            AdjustComponent();
         }
 
         private void AdjustComponent()
         {
             var statusList = Enum.GetValues(typeof(StatusEnum)).Cast<StatusEnum>().ToList();
             StatusSelect.ItemsSource = statusList;
-            StatusSelect.SelectedIndex = (int)_client.user?.status;
-            BorderInput.Background = _client.user?.status != StatusEnum.Busy ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.Transparent);
-            TimeSpanInput.Focusable= _client.user?.status != StatusEnum.Busy ? false :true;
+            StatusSelect.SelectedIndex = (int)_client.user?.Status;
+            BorderInput.Background = _client.user?.Status != StatusEnum.Busy ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.Transparent);
+            TimeSpanInput.Focusable= _client.user?.Status != StatusEnum.Busy ? false :true;
             StatusSelect.SelectionChanged += StatusComboBox_SelectionChanged;
 
-            TimeSpanInput.Text = _client.user?.expireInterval?.TotalMinutes.ToString();
+            TimeSpanInput.Text = _client.user?.ExpireInterval?.TotalMinutes.ToString();
             TimeSpanInput.PreviewTextInput += TextBox_OnPreviewTextInput;
+
             ChangeButton.Click += ChangeStatusClickEvent;
             CancelButton.Click += (object sender, RoutedEventArgs e) => Close();
         }
 
-        private async void ChangeStatusClickEvent(object sender, RoutedEventArgs e)
+        private void ChangeStatusClickEvent(object sender, RoutedEventArgs e)
         {
             var user = _client.user;
             var status = (StatusEnum)StatusSelect.SelectedItem;
-            var expiresInterval = int.TryParse(TimeSpanInput.Text, out int minutes) ? TimeSpan.FromMinutes(minutes) : TimeSpan.FromMinutes(10);
+            var expiresInterval = int.TryParse(TimeSpanInput.Text, out int minutes) ? TimeSpan.FromMinutes(minutes) : TimeSpan.Zero;
 
             if (user != null)
             {
-                if (user.status != status)
+                if (user.Status != status)
                 {
-                    await _client.SetStatusViaTimer(status, expiresInterval);
-                    Close();
+                    try
+                    {
+                        _client.SetStatusViaTimer(status, expiresInterval);
+                        Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        System.Windows.MessageBox.Show($"An error occurred: {ex.Message}");
+                    }
+                    finally
+                    {
+                        Close();
+                    }
                 }
             }
         }

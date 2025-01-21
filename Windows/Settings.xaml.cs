@@ -47,13 +47,13 @@ namespace Neshangar.Windows
                 return;
             if (_client.user != null)
             {
-                NameTextBox.Text = _client.user.name;
-                name = _client.user.name;
+                NameTextBox.Text = _client.user.Name;
+                name = _client.user.Name;
             }
         }
         private async void OkButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_client.user?.name != NameTextBox.Text)
+            if (_client.user?.Name != NameTextBox.Text)
             {
                 await _client.ChangeName(NameTextBox.Text);
             }
@@ -62,7 +62,7 @@ namespace Neshangar.Windows
 
         private async void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_client.user?.name != NameTextBox.Text)
+            if (_client.user?.Name != NameTextBox.Text)
             {
                 await _client.ChangeName(NameTextBox.Text);
             }
