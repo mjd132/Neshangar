@@ -10,30 +10,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35fcbef9-dcfa-4db8-88e6-467f5657c299" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/../Neshangar.Core/Entities/Setting.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../Neshangar.Core/Entities/UserDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/icon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Resources/red-circle.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Windows/Connect.xaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Windows/Connect.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Neshangar.Core/Data/Client.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/Data/Client.cs" afterDir="false" />
+    <list default="true" id="35fcbef9-dcfa-4db8-88e6-467f5657c299" name="Changes" comment="feat: version 1">
       <change beforePath="$PROJECT_DIR$/../Neshangar.Core/Data/DataFileContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/Data/DataFileContext.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Neshangar.Core/Entities/StatusEnum.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/Entities/StatusEnum.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Neshangar.Core/Entities/User.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/Entities/User.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Neshangar.Core/Neshangar.Core.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/Neshangar.Core.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Neshangar.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Neshangar.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NotifySystem.cs" beforeDir="false" afterPath="$PROJECT_DIR$/NotifySystem.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windows/ChangeStatus.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/ChangeStatus.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windows/ChangeStatus.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/ChangeStatus.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windows/FloatingWidget.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/FloatingWidget.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windows/Settings.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/Settings.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windows/UsersList.xaml" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/UsersList.xaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Windows/UsersList.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/UsersList.xaml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../NeshangarServer/Neshangar.db" beforeDir="false" afterPath="$PROJECT_DIR$/../NeshangarServer/Neshangar.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,7 +24,7 @@
     <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Neshangar.Core" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -70,6 +50,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d882146b4f265f10bcbec2663fce248db9ffec5fa1aeaf76e32a11ba5eafcd6/MethodBaseInvoker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Debug/net8.0-windows/App.g.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/obj/Release/net8.0-windows/App.g.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
@@ -85,7 +66,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Project.Neshangar.executor": "Debug",
+    ".NET Project.Neshangar.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "XThreadsFramesViewSplitterKey": "0.92258066",
     "git-widget-placeholder": "master",
@@ -186,8 +167,17 @@
       <workItem from="1737291966193" duration="24000" />
       <workItem from="1737292005827" duration="8542000" />
       <workItem from="1737365125365" duration="46000" />
-      <workItem from="1737381282007" duration="22355000" />
+      <workItem from="1737381282007" duration="25174000" />
     </task>
+    <task id="LOCAL-00001" summary="feat: version 1">
+      <option name="closed" value="true" />
+      <created>1737474590697</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1737474590697</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -215,6 +205,8 @@
   <component name="VcsManagerConfiguration">
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="feat: version 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: version 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -276,6 +268,19 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/../Neshangar.Core/Data/DataFileContext.cs</url>
+          <line>23</line>
+          <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar.Core\Data\DataFileContext.cs" containingFunctionPresentation="Constructor 'DataFileContext'">
+            <startOffsets>
+              <option value="377" />
+            </startOffsets>
+            <endOffsets>
+              <option value="417" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

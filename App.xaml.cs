@@ -105,7 +105,7 @@ namespace Neshangar
             services.AddSingleton<ChangeStatus>();
             services.AddSingleton<NotifySystem>();
 
-            services.AddSingleton<DataFileContext>(provider => new DataFileContext("Setting.json"));
+            services.AddSingleton<DataFileContext>(provider => new DataFileContext());
             services.AddSingleton<Client>(provider =>
                 new Client(ServiceProvider.GetRequiredService<DataFileContext>()));
         }
