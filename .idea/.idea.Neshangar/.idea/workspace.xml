@@ -10,10 +10,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="35fcbef9-dcfa-4db8-88e6-467f5657c299" name="Changes" comment="feat: version 1">
-      <change beforePath="$PROJECT_DIR$/../Neshangar.Core/Data/DataFileContext.cs" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/Data/DataFileContext.cs" afterDir="false" />
+    <list default="true" id="35fcbef9-dcfa-4db8-88e6-467f5657c299" name="Changes" comment="feat: add appdata path as store path">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/App.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,7 +22,8 @@
     <option name="autoShow" value="false" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../Neshangar.Core" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -66,7 +65,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Project.Neshangar.executor": "Run",
+    ".NET Project.Neshangar.executor": "Debug",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "XThreadsFramesViewSplitterKey": "0.92258066",
     "git-widget-placeholder": "master",
@@ -167,7 +166,7 @@
       <workItem from="1737291966193" duration="24000" />
       <workItem from="1737292005827" duration="8542000" />
       <workItem from="1737365125365" duration="46000" />
-      <workItem from="1737381282007" duration="25174000" />
+      <workItem from="1737381282007" duration="26594000" />
     </task>
     <task id="LOCAL-00001" summary="feat: version 1">
       <option name="closed" value="true" />
@@ -177,7 +176,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737474590697</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: add appdata path as store path">
+      <option name="closed" value="true" />
+      <created>1737531657899</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1737531657899</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -206,7 +213,8 @@
     <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="feat: version 1" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: version 1" />
+    <MESSAGE value="feat: add appdata path as store path" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add appdata path as store path" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -229,19 +237,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../Neshangar.Core/Data/Client.cs</url>
-          <line>67</line>
-          <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar.Core\Data\Client.cs" containingFunctionPresentation="Lambda expression inside Method 'OnReceivedData'">
-            <startOffsets>
-              <option value="2029" />
-            </startOffsets>
-            <endOffsets>
-              <option value="2045" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Windows/Connect.xaml.cs</url>
@@ -268,19 +263,6 @@
             </endOffsets>
           </properties>
           <option name="timeStamp" value="36" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../Neshangar.Core/Data/DataFileContext.cs</url>
-          <line>23</line>
-          <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar.Core\Data\DataFileContext.cs" containingFunctionPresentation="Constructor 'DataFileContext'">
-            <startOffsets>
-              <option value="377" />
-            </startOffsets>
-            <endOffsets>
-              <option value="417" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="38" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
