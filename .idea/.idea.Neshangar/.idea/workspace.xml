@@ -11,7 +11,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="35fcbef9-dcfa-4db8-88e6-467f5657c299" name="Changes" comment="feat: add appdata path as store path">
+      <change beforePath="$PROJECT_DIR$/../Neshangar.Core/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../Neshangar.Core/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Neshangar/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AssemblyInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/AssemblyInfo.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Windows/ChangeStatus.xaml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Windows/ChangeStatus.xaml.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +30,7 @@
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///Dummy.cs" root0="SKIP_HIGHLIGHTING" />
@@ -47,6 +52,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/60afdfcef9945be6977fa4b76b3d84506e2a2067afb63480aacf49417cfa/ThrowHelper.Serialization.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/9ac32f819d6853e0a6eda168c52b7f38eef9ae75936fb85d96a15c39d115245/Dispatcher.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/bd1d5c50194fea68ff3559c160230b0ab50f5acf4ce3061bffd6d62958e2182/ExceptionDispatchInfo.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d0db11e55b76dc7f234163f6cee32b297b8ddb591fb0b5cbad1b46ed17343e18/Window.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d882146b4f265f10bcbec2663fce248db9ffec5fa1aeaf76e32a11ba5eafcd6/MethodBaseInvoker.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Debug/net8.0-windows/App.g.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/obj/Release/net8.0-windows/App.g.cs" root0="SKIP_HIGHLIGHTING" />
@@ -65,7 +71,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    ".NET Project.Neshangar.executor": "Debug",
+    ".NET Project.Neshangar.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "XThreadsFramesViewSplitterKey": "0.92258066",
     "git-widget-placeholder": "master",
@@ -226,19 +232,6 @@
           <option name="timeStamp" value="14" />
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../Neshangar.Core/Data/Client.cs</url>
-          <line>241</line>
-          <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar.Core\Data\Client.cs" containingFunctionPresentation="Method 'Register'">
-            <startOffsets>
-              <option value="6942" />
-            </startOffsets>
-            <endOffsets>
-              <option value="6975" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="25" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Windows/Connect.xaml.cs</url>
           <line>41</line>
           <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar\Windows\Connect.xaml.cs" containingFunctionPresentation="Method 'SubmitButton_Click'">
@@ -252,19 +245,24 @@
           <option name="timeStamp" value="33" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/../Neshangar.Core/Data/Client.cs</url>
-          <line>52</line>
-          <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar.Core\Data\Client.cs" containingFunctionPresentation="Lambda expression inside Method 'OnReceivedData'">
+          <url>file://$PROJECT_DIR$/Windows/ChangeStatus.xaml.cs</url>
+          <line>61</line>
+          <properties documentPath="C:\Users\MajidAbbasi\source\repos\Neshangar\Windows\ChangeStatus.xaml.cs" containingFunctionPresentation="Method 'ChangeStatusClickEvent'">
             <startOffsets>
-              <option value="1592" />
+              <option value="2050" />
             </startOffsets>
             <endOffsets>
-              <option value="1647" />
+              <option value="2101" />
             </endOffsets>
           </properties>
-          <option name="timeStamp" value="36" />
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="Frame#Neshangar.Core.Data.Client+&lt;Login&gt;d__30.MoveNext" memberName="setting" />
+      </pinned-members>
+    </pin-to-top-manager>
   </component>
 </project>

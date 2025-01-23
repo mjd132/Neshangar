@@ -29,10 +29,10 @@ namespace Neshangar.Windows
         {
             _client = client;
             InitializeComponent();
-            
+
             this.Activated += OnWindowActivated;
         }
-        
+
         private void OnWindowActivated(object? sender, EventArgs e)
         {
             AdjustComponent();
@@ -43,8 +43,10 @@ namespace Neshangar.Windows
             var statusList = Enum.GetValues(typeof(StatusEnum)).Cast<StatusEnum>().ToList();
             StatusSelect.ItemsSource = statusList;
             StatusSelect.SelectedIndex = (int)_client.user?.Status;
-            BorderInput.Background = _client.user?.Status != StatusEnum.Busy ? new SolidColorBrush(Colors.LightGray) : new SolidColorBrush(Colors.Transparent);
-            TimeSpanInput.Focusable= _client.user?.Status != StatusEnum.Busy ? false :true;
+            BorderInput.Background = _client.user?.Status != StatusEnum.Busy
+                ? new SolidColorBrush(Colors.LightGray)
+                : new SolidColorBrush(Colors.Transparent);
+            TimeSpanInput.Focusable = _client.user?.Status != StatusEnum.Busy ? false : true;
             StatusSelect.SelectionChanged += StatusComboBox_SelectionChanged;
 
             TimeSpanInput.Text = _client.user?.ExpireInterval?.TotalMinutes.ToString();
@@ -58,12 +60,22 @@ namespace Neshangar.Windows
         {
             var user = _client.user;
             var status = (StatusEnum)StatusSelect.SelectedItem;
-            var expiresInterval = int.TryParse(TimeSpanInput.Text, out int minutes) ? TimeSpan.FromMinutes(minutes) : TimeSpan.Zero;
+            TimeSpan? expiresInterval = null;
 
             if (user != null)
             {
                 if (user.Status != status)
                 {
+                    
+                    if (status == StatusEnum.Busy)
+                    {
+                        if (int.TryParse(TimeSpanInput.Text, out int minutes) &&
+                            minutes is >= 5 and <= 120)
+                            expiresInterval = TimeSpan.FromMinutes(minutes);
+                        else
+                            return;
+                    }
+                    
                     try
                     {
                         _client.SetStatusViaTimer(status, expiresInterval);
@@ -80,6 +92,7 @@ namespace Neshangar.Windows
                 }
             }
         }
+
         private void TextBox_OnPreviewTextInput(object? sender, TextCompositionEventArgs e)
         {
             var textBox = sender as System.Windows.Controls.TextBox;
@@ -87,10 +100,11 @@ namespace Neshangar.Windows
 
             // If parsing is successful, set Handled to false
             e.Handled = !int.TryParse(fullText,
-                                         NumberStyles.Integer,
-                                         CultureInfo.InvariantCulture,
-                                         out int val);
+                NumberStyles.Integer,
+                CultureInfo.InvariantCulture,
+                out int val);
         }
+
         private TimeSpan? ShowError()
         {
             return new TimeSpan();
@@ -113,6 +127,7 @@ namespace Neshangar.Windows
                 }
             }
         }
+
         protected override void OnClosing(CancelEventArgs e)
         {
             e.Cancel = true;
