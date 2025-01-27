@@ -1,18 +1,7 @@
-﻿using Neshangar.Core.Data;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Neshangar.Core.Data;
+using RadioButton = System.Windows.Controls.RadioButton;
 
 namespace Neshangar.Windows
 {
@@ -40,6 +29,7 @@ namespace Neshangar.Windows
             IsVisibleChanged += (object sender, DependencyPropertyChangedEventArgs e) => initialSettingData() ;
             ApplyButton.Click += ApplyButton_Click;
             OkButton.Click += OkButton_Click;
+            CancelButton.Click += (object sender, RoutedEventArgs e) => Close();
         }
         private void initialSettingData()
         {
@@ -70,7 +60,7 @@ namespace Neshangar.Windows
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            var selectedRadio = sender as System.Windows.Controls.RadioButton;
+            var selectedRadio = sender as RadioButton;
 
             //theme = (System.Windows.Controls.RadioButton)sender;
 
