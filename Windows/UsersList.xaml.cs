@@ -45,16 +45,14 @@ namespace Neshangar.Windows
         {
             foreach (var user in _users)
             {
-                if (user.ExpiredAt != null)
+                if (user is { ExpiredAt: not null, Status: StatusEnum.Busy })
                 {
                     var remainingTime = user.ExpiredAt - DateTime.Now;
-                    if (remainingTime < TimeSpan.Zero)
+                    if (remainingTime < TimeSpan.FromSeconds(1))
                     {
                         continue;
                     }
-
-                    user.RemainingTime = remainingTime;
-                    user.RemainingTimeString = user.RemainingTime?.ToString(@"hh\:mm\:ss");
+                    user.RemainingTimeString = remainingTime?.ToString(@"hh\:mm\:ss");
                 }
             }
 
