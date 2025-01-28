@@ -19,31 +19,41 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore
+        run: dotnet restore Neshangar.sln
 
       - name: Build the project
-        run: dotnet build --configuration Release
+        run: dotnet build Neshangar.sln --configuration Release
 
       - name: Publish the project
-        run: dotnet publish -c Release -o ./publish
+        run: dotnet publish Neshangar/Neshangar.csproj -c Release -o ./bin/Publish
 
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
+      - name: Create release artifact
+        run: |
+          $version = (Get-Item ./bin/Publish/Neshanger.exe).VersionInfo.FileVersion
+          Compress-Archive -Path ./bin/Publish/* -DestinationPath ./Neshanger-v$version.zip
+        shell: pwsh
 
-      - name: Upload release assets
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./publish/Neshangar.exe
-          asset_name: Neshangar.exe
-          asset_content_type: application/octet-stream
+          name: Neshanger-v${{ github.ref_name }}
+          path: ./Neshanger-v${{ github.ref_name }}.zip
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: Neshanger-v${{ github.ref_name }}
+          path: ./release
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+          body: "Neshangar project"
+          files: ./release/Neshanger-v${{ github.ref_name }}.zip
