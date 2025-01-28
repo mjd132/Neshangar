@@ -13,12 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+
       - name: Clone Neshangar.Core repository
         run: |
-          git clone https://${GITHUB_USERNAME}:${GH_PAT}@github.com/mjd132/Neshangar.Core.git ../Neshangar.Core
-        env:
-          GITHUB_USERNAME: ${{ github.actor }}
-          GH_PAT: ${{ secrets.GH_PAT }}
+          git clone git@github.com:mjd132/Neshangar.Core.git ../Neshangar.Core
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
