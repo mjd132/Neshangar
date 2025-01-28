@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
@@ -20,8 +20,8 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan github.com >> ~/.ssh/known_hosts
       
-#      - name: Test SSH connection
-#        run: ssh -T git@github.com
+      - name: Test SSH connection
+        run: ssh -T git@github.com
 
       - name: Clone Neshangar.Core repository
         run: git clone git@github.com:mjd132/Neshangar.Core.git ../Neshangar.Core
