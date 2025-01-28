@@ -15,7 +15,10 @@ jobs:
 
       - name: Clone Neshangar.Core repository
         run: |
-          git clone https://github.com/mjd132/Neshangar.Core.git ../Neshangar.Core
+          git clone https://$GITHUB_USERNAME:$GH_PAT@github.com/mjd132/Neshangar.Core.git ../Neshangar.Core
+        env:
+          GITHUB_USERNAME: ${{ github.actor }}
+          GH_PAT: ${{ secrets.GH_PAT }}
 
       - name: Set up .NET
         uses: actions/setup-dotnet@v3
