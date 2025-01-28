@@ -5,18 +5,29 @@ on:
     tags:
       - 'v*'
 
+permissions:
+  contents: write
+  
 jobs:
-  build:
+  build-release:
     runs-on: windows-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '8.0.x'
+      - name: Set up SSH key
+        shell: bash
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          eval $(ssh-agent -s)
+          ssh-add ~/.ssh/id_ed25519
+  
+      - name: Clone Neshangar.Core repository
+        run: git clone git@github.com:mjd132/Neshangar.Core.git ../Neshangar.Core
 
       - name: Restore dependencies
         run: dotnet restore Neshangar.sln
@@ -25,35 +36,19 @@ jobs:
         run: dotnet build Neshangar.sln --configuration Release
 
       - name: Publish the project
-        run: dotnet publish Neshangar/Neshangar.csproj -c Release -o ./bin/Publish
+        run: dotnet publish ./Neshangar.csproj -c Release -o ./bin/Publish
 
-      - name: Create release artifact
+      - name: Create and upload release artifact
         run: |
-          $version = (Get-Item ./bin/Publish/Neshanger.exe).VersionInfo.FileVersion
-          Compress-Archive -Path ./bin/Publish/* -DestinationPath ./Neshanger-v$version.zip
+          Compress-Archive -Path ./bin/Publish/* -DestinationPath ./Neshangar-${{github.ref_name}}.zip
         shell: pwsh
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: Neshanger-v${{ github.ref_name }}
-          path: ./Neshanger-v${{ github.ref_name }}.zip
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: Neshanger-v${{ github.ref_name }}
-          path: ./release
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
         with:
           tag_name: ${{ github.ref_name }}
           name: Release ${{ github.ref_name }}
-          body: "Neshangar project"
-          files: ./release/Neshanger-v${{ github.ref_name }}.zip
+          body: "Neshangar Desktop (Windows)"
+          files: ./Neshangar-${{ github.ref_name }}.zip
