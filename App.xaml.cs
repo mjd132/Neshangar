@@ -30,6 +30,8 @@ namespace Neshangar
 
             InitialClient();
 
+            ServiceProvider.GetService<UserTracker>();
+
             _floatingWidget = ServiceProvider.GetRequiredService<FloatingWidget>();
             _connect = ServiceProvider.GetRequiredService<Connect>();
             _connect.Show();
@@ -98,6 +100,7 @@ namespace Neshangar
 
         private void ConfigureService(ServiceCollection services)
         {
+            //Windows
             services.AddSingleton<FloatingWidget>();
             services.AddSingleton<UsersList>();
             services.AddSingleton<Settings>();
@@ -105,9 +108,13 @@ namespace Neshangar
             services.AddSingleton<ChangeStatus>();
             services.AddSingleton<NotifySystem>();
 
-            services.AddSingleton<DataFileContext>(provider => new DataFileContext());
-            services.AddSingleton<Client>(provider =>
+            //Core Services
+            services.AddSingleton<DataFileContext>(_ => new DataFileContext());
+            services.AddSingleton<Client>(_ =>
                 new Client(ServiceProvider.GetRequiredService<DataFileContext>()));
+
+            //Client Services
+            services.AddSingleton<UserTracker>(_ => new UserTracker(ServiceProvider.GetRequiredService<Client>()));
         }
 
         public void ToggleFloatingWidget()
