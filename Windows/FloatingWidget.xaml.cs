@@ -1,9 +1,9 @@
-﻿
-using Neshangar.Core.Data;
+﻿using Neshangar.Core.Data;
 using Neshangar.Core.Entities;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -30,13 +30,14 @@ namespace Neshangar.Windows
         private UsersList _usersList;
         private readonly ChangeStatus _changeStatus;
         private DispatcherTimer _countdonwTimer;
+
         public FloatingWidget(Client client, UsersList usersList, ChangeStatus changeStatus)
         {
             _client = client;
             _usersList = usersList;
             _changeStatus = changeStatus;
             _client.UserChanged += OnUserChangedReceived;
-           
+
             InitializeComponent();
             SetFloatingWidgetOnTop();
             this.Deactivated += (object? sender, EventArgs e) => SetFloatingWidgetOnTop();
@@ -47,9 +48,8 @@ namespace Neshangar.Windows
             AdjustComponent();
 
             _countdonwTimer = new DispatcherTimer();
-            _countdonwTimer.Interval = TimeSpan.FromMinutes(1);
-            _countdonwTimer.Tick += (object? sender,EventArgs e) => UpdateFloatingWidget();
-
+            _countdonwTimer.Interval = TimeSpan.FromSeconds(30);
+            _countdonwTimer.Tick += (_, _) => UpdateFloatingWidget();
         }
 
         private void OnMouseRightButtonDown(object sender, MouseButtonEventArgs e)
@@ -66,14 +66,27 @@ namespace Neshangar.Windows
 
         private void UpdateFloatingWidget()
         {
-
-            if (_client.user?.ExpiredAt != null)
+            if (_client.user is { ExpiredAt: not null, Status: StatusEnum.Busy })
             {
+                if (!_countdonwTimer.IsEnabled)
+                {
+                    _countdonwTimer.Start();
+                }
+                
                 var remainingTime = _client.user?.ExpiredAt - DateTime.Now + TimeSpan.FromMinutes(1);
-                var remainingTimeString = "~"+remainingTime?.ToString(@"hh\:mm");
+                var remainingTimeString = "~" + remainingTime?.ToString(@"hh\:mm");
                 FloatingWidgetText.Text = remainingTimeString;
             }
+            else
+            {
+                if (_countdonwTimer.IsEnabled)
+                {
+                    _countdonwTimer.Stop();
+                }
+                FloatingWidgetText.Text = _client.user?.Status.ToString();
+            }
         }
+
         private void OnUserChangedReceived(User user)
         {
             System.Windows.Application.Current.Dispatcher.Invoke(() =>
@@ -87,7 +100,6 @@ namespace Neshangar.Windows
                     case StatusEnum.Busy:
                         FloatingWidgetBorder.Background = new SolidColorBrush(Colors.Red);
                         UpdateFloatingWidget();
-                        _countdonwTimer.Start();
                         break;
                     case StatusEnum.Idle:
                         FloatingWidgetBorder.Background = new SolidColorBrush(Colors.DarkOrange);
@@ -103,8 +115,8 @@ namespace Neshangar.Windows
                         break;
                 }
             });
-
         }
+
         private void SetFloatingWidgetOnTop()
         {
             var handle = new WindowInteropHelper(this).Handle;
@@ -118,7 +130,7 @@ namespace Neshangar.Windows
             FloatingWidgetBorder.CornerRadius = new CornerRadius(screenWidth / 2);
 
             FloatingWidgetText.Visibility = Visibility.Hidden;
-            
+
             if (_client.user != null)
             {
                 OnUserChangedReceived(_client.user);
@@ -142,8 +154,8 @@ namespace Neshangar.Windows
             this.ResizeMode = ResizeMode.NoResize;
             this.WindowStyle = WindowStyle.None;
             //this.WindowState = WindowState.Maximized;
-
         }
+
         private async void Window_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed)
@@ -151,6 +163,7 @@ namespace Neshangar.Windows
                 DragMove();
             }
         }
+
         private void Window_MouseEnter(object sender, System.Windows.Input.MouseEventArgs e)
         {
             FloatingWidgetText.FontSize += 5;
@@ -159,8 +172,8 @@ namespace Neshangar.Windows
             //this.Width += 24;
             FloatingWidgetText.Visibility = Visibility.Visible;
             FloatingWidgetCloseButton.Visibility = Visibility.Visible;
-
         }
+
         private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
         {
             FloatingWidgetText.FontSize -= 5;
@@ -176,7 +189,6 @@ namespace Neshangar.Windows
             var app = System.Windows.Application.Current as App;
 
             app.ToggleFloatingWidget();
-
         }
 
         // Override the Closing event to prevent the window from fully closing
@@ -202,7 +214,8 @@ namespace Neshangar.Windows
         private void Window_Deactivated(object? sender, EventArgs e)
         {
             // Ensure the window stays topmost
-            SetWindowPos(new WindowInteropHelper(this).Handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+            SetWindowPos(new WindowInteropHelper(this).Handle, HWND_TOPMOST, 0, 0, 0, 0,
+                SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
             Topmost = true; // Redundant, but to enforce topmost behavior
             Activate(); // Reactivate the window
         }
@@ -221,6 +234,7 @@ namespace Neshangar.Windows
             if (this.Left + this.Width > workingArea.Right) this.Left = workingArea.Right - this.Width;
             if (this.Top + this.Height > workingArea.Bottom) this.Top = workingArea.Bottom - this.Height;
         }
+
         private void FloatingWidget_Loaded(object sender, RoutedEventArgs e)
         {
             SetFloatingWidgetOnTop();
