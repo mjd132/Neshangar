@@ -6,26 +6,48 @@
         WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <!-- Tab Control -->
         <TabControl Grid.Row="0">
+
+            <!-- Global Settings Tab -->
+            <TabItem Header="Global">
+                <Grid Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="Start on startup:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Medium" />
+                    <CheckBox x:Name="StartOnStartupCheckBox" VerticalContentAlignment="Center" Grid.Row="0" Grid.Column="1" Margin="5,0"/>
+
+                    <!--<TextBlock Text="Email:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+                    <TextBox x:Name="EmailTextBox" MaxHeight="40" Grid.Row="1" Grid.Column="1" Margin="5,0"/>-->
+                </Grid>
+            </TabItem>
+            
             <!-- User Settings Tab -->
             <TabItem Header="User Settings">
                 <Grid Margin="10">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Text="Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Medium"/>
-                    <TextBox x:Name="NameTextBox" VerticalContentAlignment="Center" MinHeight="20" MaxHeight="25" Grid.Row="0" Grid.Column="1" Margin="5,0" FontWeight="Medium" MaxLines="1"/>
+                    <TextBlock Text="Name:" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Medium" />
+                    <TextBox x:Name="NameTextBox" VerticalContentAlignment="Center" MinHeight="20" MaxHeight="25"
+                             Grid.Row="0" Grid.Column="1" Margin="5,0" FontWeight="Medium" MaxLines="1" />
 
                     <!--<TextBlock Text="Email:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
                     <TextBox x:Name="EmailTextBox" MaxHeight="40" Grid.Row="1" Grid.Column="1" Margin="5,0"/>-->
@@ -46,10 +68,13 @@
             <TabItem Header="Theme">
                 <Grid Margin="10">
                     <StackPanel>
-                        <TextBlock Text="Neshangar Theme:" Margin="0,0,0,10"/>
-                        <RadioButton x:Name="LightThemeRadio" Content="Light" Checked="RadioButton_Checked" GroupName="ThemeGroup" Margin="0,0,0,5"/>
-                        <RadioButton x:Name="DarkThemeRadio" Content="Dark" Checked="RadioButton_Checked" GroupName="ThemeGroup" Margin="0,0,0,5"/>
-                        <RadioButton x:Name="CustomThemeRadio" Content="Custom" Checked="RadioButton_Checked" GroupName="ThemeGroup" Margin="0,0,0,5"/>
+                        <TextBlock Text="Neshangar Theme:" Margin="0,0,0,10" />
+                        <RadioButton x:Name="LightThemeRadio" Content="Light" Checked="RadioButton_Checked"
+                                     GroupName="ThemeGroup" Margin="0,0,0,5" />
+                        <RadioButton x:Name="DarkThemeRadio" Content="Dark" Checked="RadioButton_Checked"
+                                     GroupName="ThemeGroup" Margin="0,0,0,5" />
+                        <RadioButton x:Name="CustomThemeRadio" Content="Custom" Checked="RadioButton_Checked"
+                                     GroupName="ThemeGroup" Margin="0,0,0,5" />
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -57,9 +82,9 @@
 
         <!-- Buttons -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
-            <Button x:Name="ApplyButton" Content="Apply" Width="75" Margin="5,0" IsDefault="True"/>
-            <Button x:Name="OkButton" Content="OK" Width="75" Margin="5,0"/>
-            <Button x:Name="CancelButton" Content="Cancel" Width="75" Margin="5,0" IsCancel="True"/>
+            <Button x:Name="ApplyButton" Content="Apply" Width="75" Margin="5,0" IsDefault="True" />
+            <Button x:Name="OkButton" Content="OK" Width="75" Margin="5,0" />
+            <Button x:Name="CancelButton" Content="Cancel" Width="75" Margin="5,0" IsCancel="True" />
         </StackPanel>
     </Grid>
 </Window>

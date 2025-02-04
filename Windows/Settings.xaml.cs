@@ -22,16 +22,15 @@ namespace Neshangar.Windows
             AdjustComponent();
 
         }
-
-
+        
         private void AdjustComponent()
         {
-            IsVisibleChanged += (object sender, DependencyPropertyChangedEventArgs e) => initialSettingData() ;
+            IsVisibleChanged += (_,_) => InitialSettingData() ;
             ApplyButton.Click += ApplyButton_Click;
             OkButton.Click += OkButton_Click;
-            CancelButton.Click += (object sender, RoutedEventArgs e) => Close();
+            CancelButton.Click += (_,_) => Close();
         }
-        private void initialSettingData()
+        private void InitialSettingData()
         {
             if (!IsVisible)
                 return;
@@ -40,13 +39,15 @@ namespace Neshangar.Windows
                 NameTextBox.Text = _client.user.Name;
                 name = _client.user.Name;
             }
-        }
-        private async void OkButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (_client.user?.Name != NameTextBox.Text)
+
+            if (StartupService.IsInStartup())
             {
-                await _client.ChangeName(NameTextBox.Text);
+                StartOnStartupCheckBox.IsChecked = true;
             }
+        }
+        private void OkButton_Click(object sender, RoutedEventArgs e)
+        {
+            ApplyButton_Click(sender, e);
             Close();
         }
 
@@ -56,8 +57,17 @@ namespace Neshangar.Windows
             {
                 await _client.ChangeName(NameTextBox.Text);
             }
-        }
 
+            if (StartOnStartupCheckBox.IsChecked == true)
+            {
+                StartupService.AddToStartup();
+            }
+            else
+            {
+                StartupService.RemoveFromStartup();
+            }
+        }
+        
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             var selectedRadio = sender as RadioButton;
