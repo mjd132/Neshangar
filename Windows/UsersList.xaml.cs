@@ -29,10 +29,10 @@ namespace Neshangar.Windows
             UsersListBox.ItemsSource = _users;
             _client.UserListReceived += OnUserListReceived;
 
-            if (_client.userList != null)
+            if (_client.UserList != null)
             {
-                OnUserListReceived(_client.userList);
-                _client.userList = null;
+                OnUserListReceived(_client.UserList);
+                _client.UserList = null;
             }
 
             _countdonwTimer = new DispatcherTimer();

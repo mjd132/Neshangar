@@ -8,7 +8,7 @@ namespace Neshangar;
 public class UserTracker
 {
     private readonly Client _client;
-    
+
     private DispatcherTimer _activityTimer;
     private bool _isAfk = false;
 
@@ -25,15 +25,15 @@ public class UserTracker
     {
         int idleTime = GetIdleTime();
 
-        if (!_isAfk && idleTime >= 10 * 60 * 1000) 
+        if (!_isAfk && idleTime >= 10 * 60 * 1000)
         {
             _isAfk = true;
-            _client.SetStatusViaTimer(StatusEnum.AFK, null);
+            _client.SetStatusViaTimerAsync(StatusEnum.AFK, null).ConfigureAwait(false);
         }
         else if (_isAfk && idleTime < 10 * 60 * 1000)
         {
             _isAfk = false;
-            _client.SetStatusViaTimer(StatusEnum.Online, null);
+            _client.SetStatusViaTimerAsync(StatusEnum.Online, null).ConfigureAwait(false);
         }
     }
 
