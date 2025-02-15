@@ -50,7 +50,8 @@
 
 **3. پنجره لیست کاربران**
 
-![image](https://github.com/user-attachments/assets/f13e7655-d1e0-43fa-9046-6f3b2d01901c)
+![image](https://github.com/user-attachments/assets/ca7540ff-0d2f-42a7-881d-33778d0641cc)
+
 
 نمایش وضعیت تمامی کاربران متصل به سرور.
 
