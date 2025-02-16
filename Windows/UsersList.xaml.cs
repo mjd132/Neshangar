@@ -61,7 +61,7 @@ namespace Neshangar.Windows
 
         public void UpdateUserList(List<User> users)
         {
-            users = users.OrderBy(u => u.Status).ToList();
+            users = users.OrderBy(u => u.Status).ThenBy(u => u.Name).ToList();
             _users.Clear();
             foreach (var user in users)
             {
