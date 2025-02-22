@@ -19,6 +19,11 @@
         <Page Remove="Themes\DarkTheme.xaml"/>
         <Page Remove="Themes\LightTheme.xaml"/>
         <Page Remove="bin\**"/>
+        <Page Update="Resources\Styles\GlobalStyles.xaml">
+          <Generator>MSBuild:Compile</Generator>
+          <XamlRuntime>Wpf</XamlRuntime>
+          <SubType>Designer</SubType>
+        </Page>
     </ItemGroup>
 
     <ItemGroup>
@@ -38,9 +43,9 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Resource Include="Themes\DarkTheme.xaml"/>
-        <Resource Include="Themes\LightTheme.xaml"/>
         <Resource Include="Resources\icon.ico"/>
+        <Resource Include="Resources\Themes\DarkTheme.xaml" />
+        <Resource Include="Resources\Themes\LightTheme.xaml" />
     </ItemGroup>
 
     <ItemGroup>

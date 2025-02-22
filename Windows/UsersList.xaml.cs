@@ -9,9 +9,7 @@ using Neshangar.Core.Entities;
 
 namespace Neshangar.Windows
 {
-    /// <summary>
-    /// Interaction logic for UsersList.xaml
-    /// </summary>
+
     public partial class UsersList : Window
     {
         private DispatcherTimer _countdonwTimer;
@@ -43,6 +41,8 @@ namespace Neshangar.Windows
 
         private void CountdownTimer_Tick(object? sender, EventArgs e)
         {
+            bool needsRefresh = false;
+
             foreach (var user in _users)
             {
                 if (user is { ExpiredAt: not null, Status: StatusEnum.Busy })
@@ -52,11 +52,20 @@ namespace Neshangar.Windows
                     {
                         continue;
                     }
-                    user.RemainingTimeString = remainingTime?.ToString(@"hh\:mm\:ss");
+
+                    var newTimeString = remainingTime?.ToString(@"hh\:mm\:ss");
+                    if (user.RemainingTimeString != newTimeString)
+                    {
+                        user.RemainingTimeString = newTimeString;
+                        needsRefresh = true;
+                    }
                 }
             }
 
-            UsersListBox.Items.Refresh();
+            if (needsRefresh)
+            {
+                UsersListBox.Items.Refresh();
+            }
         }
 
         public void UpdateUserList(List<User> users)
@@ -71,8 +80,9 @@ namespace Neshangar.Windows
 
         private void AdjustWindow()
         {
-            Width = SystemParameters.PrimaryScreenWidth * 0.25;
-            Height = Screen.PrimaryScreen.WorkingArea.Bottom;
+            MinWidth = Width = SystemParameters.PrimaryScreenWidth * 0.25;
+            MinHeight = MinHeight = Height = Screen.PrimaryScreen.WorkingArea.Bottom;
+            
 
             Left = Screen.PrimaryScreen.WorkingArea.Right - Width;
             Top = 0;
@@ -110,12 +120,11 @@ namespace Neshangar.Windows
         // Close window event handler
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
+            Hide();
         }
 
         protected override void OnClosing(CancelEventArgs e)
         {
-            e.Cancel = true;
             this.Hide();
         }
     }

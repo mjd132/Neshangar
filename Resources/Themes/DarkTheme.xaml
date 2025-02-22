@@ -3,7 +3,7 @@
 
     <SolidColorBrush x:Key="WindowBackgroundBrush" Color="#FF1E1E1E"/>
     <!-- Dark Background -->
-    <SolidColorBrush x:Key="ForegroundBrush" Color="White"/>
+    <SolidColorBrush x:Key="ForegroundBrush" Color="White" />
     <!-- Light Text -->
 
 </ResourceDictionary>

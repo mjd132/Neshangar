@@ -1,7 +1,9 @@
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;
 using Neshangar.Core.Data;
 using Neshangar.Core.Entities;
+using Application = System.Windows.Application;
 
 namespace Neshangar.Windows;
 
@@ -9,7 +11,6 @@ public partial class Connect : Window
 {
     private readonly Client _client;
     private readonly DataFileContext _context;
-    
 
     public Connect(Client client, DataFileContext context)
     {
@@ -18,6 +19,8 @@ public partial class Connect : Window
 
         _client.ConnectionClosed += OnConnectionClosed;
         _client.ConnectionReconnected += OnReconnected;
+
+        Closing += Close;
         
         InitializeComponent();
 
@@ -27,10 +30,7 @@ public partial class Connect : Window
 
     private void OnReconnected()
     {
-        Dispatcher.Invoke(() =>
-        {
-            SubmitButton.Content = "Connected";
-        });
+        Dispatcher.Invoke(() => { SubmitButton.Content = "Connected"; });
     }
 
     private void OnConnectionClosed()
@@ -48,7 +48,7 @@ public partial class Connect : Window
         {
             Setting setting = _context.Setting;
 
-            if (!string.IsNullOrWhiteSpace(setting.ServerUrl) && 
+            if (!string.IsNullOrWhiteSpace(setting.ServerUrl) &&
                 !string.IsNullOrWhiteSpace(setting.UserToken))
             {
                 ServerUrlTextBox.Text = setting.ServerUrl;
@@ -89,5 +89,10 @@ public partial class Connect : Window
 
         await _client.ConnectAsync(serverUrl);
         await _client.RegisterAsync(name);
+    }
+
+    private void Close(object? sender, CancelEventArgs e)
+    {
+        ((App)Application.Current).PrepareForShutdown();
     }
 }

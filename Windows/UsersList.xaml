@@ -4,72 +4,132 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Neshangar.Windows"
+        xmlns:converter="clr-namespace:Neshangar.Resources.Converter"
         mc:Ignorable="d"
         Title="Users List"
-        Background="{DynamicResource WindowBackgroundBrush}" 
+        Background="{DynamicResource WindowBackgroundBrush}"
         Foreground="{DynamicResource ForegroundBrush}"
         WindowStyle="None"
-        ResizeMode="NoResize"
-        MouseDown="Window_MouseDown" Height="584" Width="316"
+        ResizeMode="CanResize"
+        MouseDown="Window_MouseDown"
+        AllowsTransparency="False"
         >
-    <Grid Margin="10" ClipToBounds="True">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48*"/>
-            <RowDefinition Height="41*"/>
-        </Grid.RowDefinitions>
-        <!-- Top Navigation Bar -->
-        <Border Height="40" VerticalAlignment="Top">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+    <Window.Resources>
+        <converter:WidthReducerConverter x:Key="WidthReducerConverter"/>
+    </Window.Resources>
 
-                <TextBlock Text="Users List" Foreground="White" VerticalAlignment="Center" Margin="10,0,0,0" FontSize="16"/>
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="0"
+                      CornerRadius="0"
+                      GlassFrameThickness="0"
+                      ResizeBorderThickness="8" />
+    </WindowChrome.WindowChrome>
+    
+    <Border CornerRadius="10" Background="{DynamicResource WindowBackgroundBrush}" Padding="10"
+            Effect="{DynamicResource ShadowEffect}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-                <!-- Minimize Button -->
-                <Button Content="_" Padding="0" Background="{DynamicResource WindowBackgroudBrush}" BorderThickness="0" Foreground="{DynamicResource ForegroundBrush}" Width="40" Height="30" Grid.Column="1" VerticalAlignment="Center" 
-                        HorizontalAlignment="Right" Click="MinimizeButton_Click" />
+            <!-- Top Navigation Bar -->
+            <Border Background="{DynamicResource WindowBackgroudBrush}" CornerRadius="10,10,0,0" BorderBrush="#5F5F5F">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="40" />
+                        <ColumnDefinition Width="40" />
+                    </Grid.ColumnDefinitions>
 
-                <!-- Close Button -->
-                <Button Content="X" Width="40" Padding="2" Height="30" Grid.Column="2" BorderThickness="0" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" 
-                        HorizontalAlignment="Right" Click="CloseButton_Click" Background="#FFC80000" />
-            </Grid>
-        </Border>
+                    <TextBlock Text="Users List" Foreground="{DynamicResource ForegroundBrush}" VerticalAlignment="Center" Margin="10,0,0,0"
+                               FontSize="16" FontWeight="SemiBold" />
 
-        <!-- Main content area for Users List -->
-        <ListBox x:Name="UsersListBox" 
-                 VerticalAlignment="Stretch" 
-                 HorizontalAlignment="Stretch" 
-                 Margin="0,50,0,10" 
-                 Background="{DynamicResource WindowBackgroudBrush}" 
-                 Foreground="{DynamicResource ForegroundBrush}" 
-                 BorderThickness="0" Grid.RowSpan="2" Width="auto" d:ItemsSource="{d:SampleData ItemCount=5}" >
+                    <!-- Minimize Button -->
+                    <Button Content="🗕" Width="30" Height="30" Grid.Column="1"
+                            Click="MinimizeButton_Click" ToolTip="Minimize" 
+                            Style="{DynamicResource MinimizeButtonStyle}"/>
 
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <Grid Width="auto">
+                    
+                    <Button Content="✖" Width="30" Height="30" Grid.Column="2"
+                            Click="CloseButton_Click" ToolTip="Close" 
+                            Style="{DynamicResource ExitButtonStyle}"/>
+                    
+                </Grid>
+            </Border>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                        </Grid.ColumnDefinitions>
+            <!-- Users List -->
+            <ListBox x:Name="UsersListBox" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     Background="Transparent" BorderThickness="0"
+                     Foreground="{DynamicResource ForegroundBrush}"
+                     Margin="0,10,0,10">
 
-                        <TextBlock Text="{Binding Name}" FontWeight="Bold" Grid.Column="0" />
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    </Style>
+                </ListBox.ItemContainerStyle>
 
-                        <TextBlock Text="{Binding Status}" Margin="10 0 10 0" Grid.Column="1" />
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border Padding="4" Margin="4,2" CornerRadius="5"
+                                Width="{Binding ActualWidth, ElementName=UsersListBox, Converter={StaticResource WidthReducerConverter}}"
+                                HorizontalAlignment="Stretch" 
+                                Background="{DynamicResource WindowBackgroudBrush}" >
+                            
+                            <Grid Width="Auto">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" /> <!-- Name -->
+                                    <ColumnDefinition Width="*" />   <!-- Space -->
+                                    <ColumnDefinition Width="Auto" /> <!-- Status -->
+                                    <ColumnDefinition Width="Auto" /> <!-- Remaining Time -->
+                                </Grid.ColumnDefinitions>
 
-                        <TextBlock Text="{Binding RemainingTimeString}" 
-                                 Grid.Column="2"  Grid.ColumnSpan="2"
-                       HorizontalAlignment="Stretch" 
-                       TextAlignment="Right" />
+                                <!-- User Name -->
+                                <TextBlock Text="{Binding Name}" FontSize="16" FontWeight="Medium"
+                                           Foreground="{DynamicResource ForegroundBrush}"
+                                           VerticalAlignment="Center" HorizontalAlignment="Left" />
 
-                    </Grid>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+                                <!-- Status Indicator -->
+                                <Border Grid.Column="2" Padding="4"
+                                        CornerRadius="5" MinWidth="60" HorizontalAlignment="Right">
+                                    <TextBlock Text="{Binding Status}" FontWeight="Medium" VerticalAlignment="Center" Foreground="White"
+                                               FontSize="12"
+                                               HorizontalAlignment="Center" />
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Background" Value="Gray" />
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding Status}" Value="Online">
+                                                    <Setter Property="Background" Value="Green" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Busy">
+                                                    <Setter Property="Background" Value="Red" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Idle">
+                                                    <Setter Property="Background" Value="DarkOrange" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="AFK">
+                                                    <Setter Property="Background" Value="DarkKhaki" />
+                                                </DataTrigger>
+                                                <DataTrigger Binding="{Binding Status}" Value="Offline">
+                                                    <Setter Property="Background" Value="DarkGray" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                </Border>
 
-    </Grid>
+                                <!-- Remaining Time -->
+                                <TextBlock Grid.Column="3" Margin="6,0"
+                                           HorizontalAlignment="Right" Text="{Binding RemainingTimeString}"
+                                           FontSize="14" FontWeight="Bold" VerticalAlignment="Center" />
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+    </Border>
 </Window>

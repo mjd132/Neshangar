@@ -178,9 +178,7 @@ namespace Neshangar
 
         private void ExitMenuItem_Click(object? sender, EventArgs e)
         {
-            _notifyIcon.Visible = false;
-            _notifyIcon.Dispose();
-            Application.Current.Shutdown();
+            ((App)Application.Current).PrepareForShutdown();
         }
 
         private void SettingsItem_Click(object? sender, EventArgs e)

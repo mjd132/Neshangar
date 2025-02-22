@@ -200,11 +200,15 @@ public partial class FloatingWidget
     {
         if (_usersList.IsVisible)
         {
-            _usersList.Focus();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                _usersList.Focus();
+                _usersList.WindowState = WindowState.Normal;
+            });
         }
         else
         {
-            _usersList.Show();
+            Application.Current.Dispatcher.Invoke(() => _usersList.Show());
         }
     }
 
