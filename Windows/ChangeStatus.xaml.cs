@@ -1,20 +1,13 @@
-﻿using Neshangar.Core.Data;
-using Neshangar.Core.Entities;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
+using Neshangar.Core.Data;
+using Neshangar.Core.Entities;
+using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace Neshangar.Windows
 {
@@ -83,7 +76,7 @@ namespace Neshangar.Windows
                     }
                     catch (Exception ex)
                     {
-                        System.Windows.MessageBox.Show($"An error occurred: {ex.Message}");
+                        MessageBox.Show($"An error occurred: {ex.Message}");
                     }
                     finally
                     {
@@ -95,7 +88,7 @@ namespace Neshangar.Windows
 
         private void TextBox_OnPreviewTextInput(object? sender, TextCompositionEventArgs e)
         {
-            var textBox = sender as System.Windows.Controls.TextBox;
+            var textBox = sender as TextBox;
             var fullText = textBox?.Text.Insert(textBox.SelectionStart, e.Text);
 
             // If parsing is successful, set Handled to false
@@ -110,7 +103,7 @@ namespace Neshangar.Windows
             return new TimeSpan();
         }
 
-        private void StatusComboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        private void StatusComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StatusSelect.SelectedItem != null)
             {

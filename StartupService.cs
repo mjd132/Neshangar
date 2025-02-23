@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.IO;
 
 namespace Neshangar;
@@ -8,7 +9,7 @@ public class StartupService
     {
         string startupFolder = Environment.GetFolderPath(Environment.SpecialFolder.Startup);
         string shortcutPath = Path.Combine(startupFolder, "Neshangar.bat");
-        string? appPath = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
+        string? appPath = Process.GetCurrentProcess().MainModule?.FileName;
 
         if (appPath is not null)
         {

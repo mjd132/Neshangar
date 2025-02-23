@@ -16,43 +16,58 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Page Remove="Themes\DarkTheme.xaml"/>
-        <Page Remove="Themes\LightTheme.xaml"/>
-        <Page Remove="bin\**"/>
+        <Page Remove="Themes\DarkTheme.xaml" />
+        <Page Remove="Themes\LightTheme.xaml" />
+        <Page Remove="bin\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <Import Include="System.Data"/>
-        <Import Include="System.Drawing"/>
-        <Import Include="System.Windows.Forms"/>
+        <Import Include="System.Data" />
+        <Import Include="System.Drawing" />
+        <Import Include="System.Windows.Forms" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1"/>
-        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.1" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Neshangar.Core\Neshangar.Core.csproj"/>
+        <ProjectReference Include="..\Neshangar.Core\Neshangar.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Resource Include="Themes\DarkTheme.xaml"/>
-        <Resource Include="Themes\LightTheme.xaml"/>
-        <Resource Include="Resources\icon.ico"/>
+        <Resource Include="Themes\DarkTheme.xaml" />
+        <Resource Include="Themes\LightTheme.xaml" />
+        <Resource Include="Resources\icon.ico" />
     </ItemGroup>
 
     <ItemGroup>
-        <Compile Remove="bin\**"/>
+        <Compile Remove="bin\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <EmbeddedResource Remove="bin\**"/>
+        <EmbeddedResource Remove="bin\**" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Remove="bin\**"/>
+        <None Remove="bin\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Properties\Settings.Designer.cs">
+        <DesignTimeSharedInput>True</DesignTimeSharedInput>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Settings.settings</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Properties\Settings.settings">
+        <Generator>SettingsSingleFileGenerator</Generator>
+        <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+      </None>
     </ItemGroup>
 
 </Project>

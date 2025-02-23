@@ -5,6 +5,7 @@ using Microsoft.Win32;
 using Neshangar.Core.Data;
 using Neshangar.Windows;
 using Application = System.Windows.Application;
+using Settings = Neshangar.Properties.Settings;
 
 namespace Neshangar
 {
@@ -23,6 +24,7 @@ namespace Neshangar
             ConfigureService(services);
             ServiceProvider = services.BuildServiceProvider();
 
+            IsFirstTimeRan();
             base.OnStartup(e);
 
             SystemEvents.UserPreferenceChanged += OnUserPreferenceChanged;
@@ -36,6 +38,21 @@ namespace Neshangar
             _floatingWidget = ServiceProvider.GetRequiredService<FloatingWidget>();
             _connect = ServiceProvider.GetRequiredService<Connect>();
             _connect.Show();
+        }
+
+        private void IsFirstTimeRan()
+        {
+            if (Settings.Default.IsFirstRun)
+            {
+                Settings.Default.IsFirstRun = false;
+                Settings.Default.Save();
+
+
+                if (!StartupService.IsInStartup())
+                {
+                    StartupService.AddToStartup();
+                }
+            }
         }
 
         private void OnUserPreferenceChanged(object sender, UserPreferenceChangedEventArgs e)
@@ -91,12 +108,11 @@ namespace Neshangar
         {
             Current.Dispatcher.Invoke(() =>
             {
-                
                 ServiceProvider.GetService<ChangeStatus>()?.Close();
                 ServiceProvider.GetService<UsersList>()?.Close();
                 _floatingWidget.Close();
                 _notifySystem.Hide();
-                
+
                 _connect.Show();
             });
         }
@@ -120,7 +136,7 @@ namespace Neshangar
             //Windows
             services.AddSingleton<FloatingWidget>();
             services.AddSingleton<UsersList>();
-            services.AddSingleton<Settings>();
+            services.AddSingleton<Windows.Settings>();
             services.AddSingleton<Connect>();
             services.AddSingleton<ChangeStatus>();
             services.AddSingleton<NotifySystem>();
@@ -132,6 +148,7 @@ namespace Neshangar
 
             //Client Services
             services.AddSingleton<UserTracker>(_ => new UserTracker(ServiceProvider.GetRequiredService<Client>()));
+            services.AddScoped<StartupService>(_ => new StartupService());
         }
 
         public void ToggleFloatingWidget()
