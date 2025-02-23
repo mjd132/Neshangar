@@ -42,14 +42,14 @@ namespace Neshangar.Windows
         {
             var statusList = Enum.GetValues(typeof(StatusEnum)).Cast<StatusEnum>().ToList();
             StatusSelect.ItemsSource = statusList;
-            StatusSelect.SelectedIndex = (int)_client.user?.Status;
-            BorderInput.Background = _client.user?.Status != StatusEnum.Busy
+            StatusSelect.SelectedIndex = (int)_client.User?.Status;
+            BorderInput.Background = _client.User?.Status != StatusEnum.Busy
                 ? new SolidColorBrush(Colors.LightGray)
                 : new SolidColorBrush(Colors.Transparent);
-            TimeSpanInput.Focusable = _client.user?.Status != StatusEnum.Busy ? false : true;
+            TimeSpanInput.Focusable = _client.User?.Status != StatusEnum.Busy ? false : true;
             StatusSelect.SelectionChanged += StatusComboBox_SelectionChanged;
 
-            TimeSpanInput.Text = _client.user?.ExpireInterval?.TotalMinutes.ToString();
+            TimeSpanInput.Text = _client.User?.ExpireInterval?.TotalMinutes.ToString();
             TimeSpanInput.PreviewTextInput += TextBox_OnPreviewTextInput;
 
             ChangeButton.Click += ChangeStatusClickEvent;
@@ -58,7 +58,7 @@ namespace Neshangar.Windows
 
         private void ChangeStatusClickEvent(object sender, RoutedEventArgs e)
         {
-            var user = _client.user;
+            var user = _client.User;
             var status = (StatusEnum)StatusSelect.SelectedItem;
             TimeSpan? expiresInterval = null;
 

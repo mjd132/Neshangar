@@ -34,10 +34,10 @@ namespace Neshangar.Windows
         {
             if (!IsVisible)
                 return;
-            if (_client.user != null)
+            if (_client.User != null)
             {
-                NameTextBox.Text = _client.user.Name;
-                name = _client.user.Name;
+                NameTextBox.Text = _client.User.Name;
+                name = _client.User.Name;
             }
 
             if (StartupService.IsInStartup())
@@ -45,6 +45,7 @@ namespace Neshangar.Windows
                 StartOnStartupCheckBox.IsChecked = true;
             }
         }
+        
         private void OkButton_Click(object sender, RoutedEventArgs e)
         {
             ApplyButton_Click(sender, e);
@@ -53,9 +54,9 @@ namespace Neshangar.Windows
 
         private async void ApplyButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_client.user?.Name != NameTextBox.Text)
+            if (_client.User?.Name != NameTextBox.Text)
             {
-                await _client.ChangeName(NameTextBox.Text);
+                await _client.ChangeNameAsync(NameTextBox.Text);
             }
 
             if (StartOnStartupCheckBox.IsChecked == true)

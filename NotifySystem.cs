@@ -1,14 +1,8 @@
-﻿using Neshangar.Core.Data;
+﻿using System.IO;
+using Neshangar.Core.Data;
 using Neshangar.Core.Entities;
 using Neshangar.Windows;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
+using Application = System.Windows.Application;
 
 namespace Neshangar
 {
@@ -133,6 +127,17 @@ namespace Neshangar
             _notifyIcon.ContextMenuStrip = _contextMenuStrip;
         }
 
+        public void Hide()
+        {
+            if (_notifyIcon != null) _notifyIcon.Visible = false;
+            _contextMenuStrip?.Hide();
+        }
+
+        public void Show()
+        {
+            if (_notifyIcon != null) _notifyIcon.Visible = true;
+        }
+
         private void ChangeStatusItem_Click(object? sender, EventArgs e)
         {
             if (_changeStatus.IsVisible)
@@ -147,8 +152,6 @@ namespace Neshangar
 
         private void ToggleFloatingWidget(object? sender, EventArgs e)
         {
-            var app = System.Windows.Application.Current as App;
-
             if (_floatingWidget.IsVisible)
             {
                 _floatingWidget.Hide();
@@ -177,7 +180,7 @@ namespace Neshangar
         {
             _notifyIcon.Visible = false;
             _notifyIcon.Dispose();
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         private void SettingsItem_Click(object? sender, EventArgs e)
@@ -196,22 +199,21 @@ namespace Neshangar
         {
             _notifyIcon = new NotifyIcon();
             var iconUri = new Uri("pack://application:,,,/Resources/icon.ico", UriKind.Absolute);
-            var iconStream = System.Windows.Application.GetResourceStream(iconUri)?.Stream;
+            var iconStream = Application.GetResourceStream(iconUri)?.Stream;
             if (iconStream == null)
             {
                 throw new FileNotFoundException("Icon file not found in resources.");
             }
             
             _notifyIcon.Icon = new Icon(iconStream);
-            _notifyIcon.Visible = true;
             _notifyIcon.Text = "Neshangar";
-            _notifyIcon.Click += (object? sender, EventArgs e) =>
+            _notifyIcon.Click += (_, _) =>
             {
                 _floatingWidget.Show();
                 _floatingWidget.Activate();
                 _floatingWidget.Focus();
             };
-            _notifyIcon.DoubleClick += (object? sender, EventArgs e) =>
+            _notifyIcon.DoubleClick += (_, _) =>
             {
                 _changeStatus.Show();
                 _changeStatus.Activate();

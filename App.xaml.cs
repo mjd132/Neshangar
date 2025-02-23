@@ -32,6 +32,7 @@ namespace Neshangar
 
             ServiceProvider.GetService<UserTracker>();
 
+            _notifySystem = ServiceProvider.GetRequiredService<NotifySystem>();
             _floatingWidget = ServiceProvider.GetRequiredService<FloatingWidget>();
             _connect = ServiceProvider.GetRequiredService<Connect>();
             _connect.Show();
@@ -82,6 +83,22 @@ namespace Neshangar
         {
             _client = ServiceProvider.GetRequiredService<Client>();
             _client.UserLoggedIn += OnLoggedIn;
+            _client.ConnectionClosed += OnConnectionClosed;
+            _client.ConnectionReconnected += OnLoggedIn;
+        }
+
+        private void OnConnectionClosed()
+        {
+            Current.Dispatcher.Invoke(() =>
+            {
+                
+                ServiceProvider.GetService<ChangeStatus>()?.Close();
+                ServiceProvider.GetService<UsersList>()?.Close();
+                _floatingWidget.Close();
+                _notifySystem.Hide();
+                
+                _connect.Show();
+            });
         }
 
         private void OnLoggedIn()
@@ -94,7 +111,7 @@ namespace Neshangar
                 }
 
                 _floatingWidget.Show();
-                _notifySystem = ServiceProvider.GetRequiredService<NotifySystem>();
+                _notifySystem.Show();
             });
         }
 
@@ -133,7 +150,7 @@ namespace Neshangar
 
         protected override void OnExit(ExitEventArgs e)
         {
-            _client?.CloseConnection();
+            _client?.CloseConnectionAsync();
 
             base.OnExit(e);
         }

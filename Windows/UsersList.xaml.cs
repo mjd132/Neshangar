@@ -29,10 +29,10 @@ namespace Neshangar.Windows
             UsersListBox.ItemsSource = _users;
             _client.UserListReceived += OnUserListReceived;
 
-            if (_client.userList != null)
+            if (_client.UserList != null)
             {
-                OnUserListReceived(_client.userList);
-                _client.userList = null;
+                OnUserListReceived(_client.UserList);
+                _client.UserList = null;
             }
 
             _countdonwTimer = new DispatcherTimer();
@@ -61,6 +61,7 @@ namespace Neshangar.Windows
 
         public void UpdateUserList(List<User> users)
         {
+            users = users.OrderBy(u => u.Status).ThenBy(u => u.Name).ToList();
             _users.Clear();
             foreach (var user in users)
             {
